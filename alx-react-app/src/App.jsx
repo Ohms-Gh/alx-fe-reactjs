@@ -1,13 +1,19 @@
-import Header from './components/Header';
-import MainContent from './components/MainContent';
-import Footer from './components/Footer';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
     <>
-      <Header />
-      <MainContent />
-      <Footer />
+      <UserProfile 
+        name="Bismark" 
+        age="30" 
+        bio="Loves hiking and photography" 
+      />
+
+      <UserProfile 
+        name="Bismark" 
+        age="30" 
+        bio="A foodie who enjoys exploring new cities" 
+      />
     </>
   );
 }

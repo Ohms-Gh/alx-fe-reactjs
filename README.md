@@ -1,9 +1,4 @@
-alx-fe-reactjs/
- └── alx-react-app/
-     └── src/
-         ├── App.jsx
-         ├── components/
-         │   ├── Header.jsx
-         │   ├── MainContent.jsx
-         │   ├── Footer.jsx
-         │   └── UserProfile.jsx
+ALX FE ReactJS
+
+This repository contains a React application created using Vite.
+It is part of the ALX learning program for understanding React fundamentals, JSX, props, and components.

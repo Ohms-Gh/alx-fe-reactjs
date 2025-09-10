@@ -1,7 +1,18 @@
-import UserInfo from './UserInfo';
+import { createContext, useState } from 'react';
 
-function ProfilePage() {
-  return <UserInfo />;
+const UserContext = createContext({
+  user: null,
+  setUser: () => {}
+});
+
+export function UserProvider({ children }) {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
 
-export default ProfilePage;
+export default UserContext;

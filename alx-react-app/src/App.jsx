@@ -1,20 +1,16 @@
+import Header from './components/Header';
+import MainContent from './components/MainContent';
 import UserProfile from './components/UserProfile';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <>
-      <UserProfile 
-        name="Alice" 
-        age="25" 
-        bio="Loves hiking and photography" 
-      />
-
-      <UserProfile 
-        name="John" 
-        age="30" 
-        bio="A foodie who enjoys exploring new cities" 
-      />
-    </>
+    <div>
+      <Header />
+      <MainContent />
+      <UserProfile name="Alice" age={25} bio="Loves exploring new cities." />
+      <Footer />
+    </div>
   );
 }
 

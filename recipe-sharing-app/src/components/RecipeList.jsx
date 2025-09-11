@@ -3,10 +3,10 @@ import { useRecipeStore } from '../store/recipeStore';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
+  const recipes = useRecipeStore((state) => state.filteredRecipes);
 
   if (!recipes.length) {
-    return <p>No recipes yet. Add one!</p>;
+    return <p>No matching recipes. Try another search.</p>;
   }
 
   return (
@@ -17,7 +17,6 @@ const RecipeList = () => {
             <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
           </h3>
           <p>{recipe.description}</p>
-
           <div>
             <Link to={`/recipes/${recipe.id}/edit`} style={{ marginRight: 8 }}>
               Edit

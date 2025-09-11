@@ -30,9 +30,13 @@ const EditRecipeForm = () => {
     );
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateRecipe({ id: recipeId, title: title.trim(), description: description.trim() });
+  const handleSubmit = (event) => {
+    event.preventDefault(); 
+    updateRecipe({
+      id: recipeId,
+      title: title.trim(),
+      description: description.trim(),
+    });
     navigate(`/recipes/${recipeId}`);
   };
 
@@ -43,7 +47,7 @@ const EditRecipeForm = () => {
         <input
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(event) => setTitle(event.target.value)}
           placeholder="Title"
           required
           style={{ display: 'block', width: '100%', marginBottom: 8 }}
@@ -52,7 +56,7 @@ const EditRecipeForm = () => {
       <div>
         <textarea
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(event) => setDescription(event.target.value)}
           placeholder="Description"
           required
           style={{ display: 'block', width: '100%', minHeight: 120, marginBottom: 8 }}

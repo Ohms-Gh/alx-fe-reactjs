@@ -1,18 +1,5 @@
-const DataContext = React.createContext();
+import { createContext } from "react";
 
-function Grandparent({data}) {
-  return (
-    <DataContext.Provider value={data}>
-      <Parent />
-    </DataContext.Provider>
-  );
-}
+const UserContext = createContext();
 
-function Parent() {
-  return <Child />;
-}
-
-function Child() {
-  const data = useContext(DataContext);
-  return <div>{data}</div>;
-}
+export default UserContext;

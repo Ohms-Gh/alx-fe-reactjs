@@ -2,10 +2,10 @@ import { create } from 'zustand';
 
 export const useRecipeStore = create((set) => ({
   recipes: [],
-  favorites: [],
-  recommendations: [],
   searchTerm: '',
   filteredRecipes: [],
+  favorites: [],
+  recommendations: [],
 
   addRecipe: (newRecipe) =>
     set((state) => {
@@ -39,6 +39,7 @@ export const useRecipeStore = create((set) => ({
         filteredRecipes: updated.filter((recipe) =>
           recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
         ),
+        favorites: state.favorites.filter((favId) => favId !== id), // cleanup favorites too
       };
     }),
 
@@ -67,7 +68,7 @@ export const useRecipeStore = create((set) => ({
     set((state) => ({
       favorites: state.favorites.filter((id) => id !== recipeId),
     })),
-  
+
   generateRecommendations: () =>
     set((state) => {
       const recommended = state.recipes.filter(

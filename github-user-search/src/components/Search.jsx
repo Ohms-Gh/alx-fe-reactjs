@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { searchUsers } from "../services/githubService"; // ✅ advanced search API
+import { searchUsers, fetchUserData } from "../services/githubService"; 
 
 function Search() {
   const [username, setUsername] = useState("");
   const [location, setLocation] = useState("");
   const [minRepos, setMinRepos] = useState("");
   const [users, setUsers] = useState([]);
+  const [singleUser, setSingleUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -14,10 +15,16 @@ function Search() {
     setLoading(true);
     setError("");
     setUsers([]);
+    setSingleUser(null);
 
     try {
-      const data = await searchUsers({ username, location, minRepos });
-      setUsers(data.items || []);
+      if (username && !location && !minRepos) {
+        const data = await fetchUserData(username);
+        setSingleUser(data);
+      } else {
+        const data = await searchUsers({ username, location, minRepos });
+        setUsers(data.items || []);
+      }
     } catch {
       setError("Looks like we can’t find any matching users");
     } finally {
@@ -27,7 +34,6 @@ function Search() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      {/* Search Form */}
       <form
         onSubmit={handleSubmit}
         className="grid gap-4 md:grid-cols-3 bg-gray-100 p-4 rounded-2xl shadow"
@@ -62,8 +68,30 @@ function Search() {
       </form>
 
       {loading && <p className="mt-4 text-gray-600">Loading...</p>}
-
       {error && <p className="mt-4 text-red-500">{error}</p>}
+
+      {singleUser && (
+        <div className="mt-6 border rounded-lg p-6 text-center shadow">
+          <img
+            src={singleUser.avatar_url}
+            alt={singleUser.login}
+            className="w-24 h-24 rounded-full mx-auto"
+          />
+          <h2 className="text-xl font-bold mt-2">
+            {singleUser.name || singleUser.login}
+          </h2>
+          <p className="text-gray-600">{singleUser.bio}</p>
+          <p className="text-gray-500">Repos: {singleUser.public_repos}</p>
+          <a
+            href={singleUser.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 mt-2 inline-block"
+          >
+            View Profile
+          </a>
+        </div>
+      )}
 
       <div className="mt-6 grid gap-4">
         {users.map((user) => (

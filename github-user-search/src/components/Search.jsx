@@ -1,77 +1,98 @@
 import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import { searchUsers } from "../services/githubService";
 
 function Search() {
-  const [query, setQuery] = useState("");
-  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!query.trim()) return;
-
     setLoading(true);
     setError("");
-    setUser(null);
+    setUsers([]);
 
     try {
-      const data = await fetchUserData(query);
-      setUser(data);
+      const data = await searchUsers({ username, location, minRepos });
+      setUsers(data.items || []);
     } catch {
-      setError("Looks like we cant find the user");
+      setError("Looks like we can’t find any matching users");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-6">
-      {/* Search Form */}
-      <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+    <div className="p-6 max-w-2xl mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="grid gap-4 md:grid-cols-3 bg-gray-100 p-4 rounded-2xl shadow"
+      >
+
         <input
           type="text"
-          placeholder="Search GitHub username..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="border px-2 py-1 rounded w-full"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="border rounded px-3 py-2 w-full"
         />
+
+        <input
+          type="text"
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="border rounded px-3 py-2 w-full"
+        />
+
+        <input
+          type="number"
+          placeholder="Min Repos"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="border rounded px-3 py-2 w-full"
+        />
+
         <button
           type="submit"
-          className="bg-blue-600 text-white px-3 py-1 rounded"
+          className="md:col-span-3 bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition"
         >
           Search
         </button>
       </form>
 
-      {/* Loading State */}
-      {loading && <p>Loading...</p>}
+      {loading && <p className="mt-4 text-gray-600">Loading...</p>}
 
-      {/* Error State */}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="mt-4 text-red-500">{error}</p>}
 
-      {/* User Result */}
-      {user && (
-        <div className="border rounded p-4 max-w-sm mx-auto text-center">
-          <img
-            src={user.avatar_url}
-            alt={user.login}
-            className="w-24 h-24 rounded-full mx-auto"
-          />
-          <h2 className="text-xl font-bold mt-2">
-            {user.name || user.login}
-          </h2>
-          <p className="text-gray-600">{user.bio}</p>
-          <a
-            href={user.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 mt-2 inline-block"
+      <div className="mt-6 grid gap-4">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="flex items-center gap-4 border rounded-lg p-4 shadow hover:bg-gray-50"
           >
-            View Profile
-          </a>
-        </div>
-      )}
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <h2 className="text-lg font-bold">{user.login}</h2>
+              <a
+                href={user.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600"
+              >
+                View Profile
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

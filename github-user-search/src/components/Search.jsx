@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchUsers } from "../services/githubService";
+import { searchUsers } from "../services/githubService"; // ✅ advanced search API
 
 function Search() {
   const [username, setUsername] = useState("");
@@ -27,11 +27,11 @@ function Search() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
+      {/* Search Form */}
       <form
         onSubmit={handleSubmit}
         className="grid gap-4 md:grid-cols-3 bg-gray-100 p-4 rounded-2xl shadow"
       >
-
         <input
           type="text"
           placeholder="Username"
@@ -39,7 +39,6 @@ function Search() {
           onChange={(e) => setUsername(e.target.value)}
           className="border rounded px-3 py-2 w-full"
         />
-
         <input
           type="text"
           placeholder="Location"
@@ -47,7 +46,6 @@ function Search() {
           onChange={(e) => setLocation(e.target.value)}
           className="border rounded px-3 py-2 w-full"
         />
-
         <input
           type="number"
           placeholder="Min Repos"
@@ -55,7 +53,6 @@ function Search() {
           onChange={(e) => setMinRepos(e.target.value)}
           className="border rounded px-3 py-2 w-full"
         />
-
         <button
           type="submit"
           className="md:col-span-3 bg-blue-600 text-white py-2 rounded-xl hover:bg-blue-700 transition"

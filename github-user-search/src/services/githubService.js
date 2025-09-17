@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "https://api.github.com";
 
-export async function searchUsers({ username, location, minRepos }) {
+export async function searchUsers({ username, location, minRepos, page = 1 }) {
   let query = "";
 
   if (username) query += `${username} in:login `;
@@ -11,10 +11,15 @@ export async function searchUsers({ username, location, minRepos }) {
 
   try {
     const response = await axios.get(`${BASE_URL}/search/users`, {
-      params: { q: query.trim() },
+      params: {
+        q: query.trim(),
+        page,
+        per_page: 30, 
+      },
     });
     return response.data;
   } catch (error) {
-    throw new Error("Error fetching users");
+    console.error("Error fetching users:", error);
+    throw error;
   }
 }

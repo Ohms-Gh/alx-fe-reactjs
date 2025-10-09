@@ -9,26 +9,18 @@
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1"
   },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "jest": "^29.7.0"
-  },
   "jest": {
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
-    "moduleFileExtensions": ["js", "jsx"],
-    "moduleDirectories": ["node_modules", "src"]
-  },
-  "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
-  },
-  "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+    "moduleFileExtensions": ["js", "jsx"]
   }
 }

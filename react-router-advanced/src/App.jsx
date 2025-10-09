@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
-import Profile from "./components/Profile.jsx"; // ✅ Now from components
+import Profile from "./components/Profile.jsx"; 
 import Blog from "./pages/Blog/Blog.jsx";
 import BlogPost from "./pages/Blog/BlogPost.jsx";
 
@@ -16,16 +16,16 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
 
-        {/* Protected route wrapping Profile */}
+        {/* Protected Profile Route */}
         <Route element={<ProtectedRoute />}>
           <Route path="/profile/*" element={<Profile />} />
         </Route>
 
-        {/* Dynamic Blog routes */}
+        {/* ✅ Dynamic Blog Route (fixed) */}
         <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:postId" element={<BlogPost />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
 
-        {/* Catch-all redirect */}
+        {/* Redirect unknown paths */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

@@ -21,7 +21,7 @@ describe("TodoList Component", () => {
     expect(screen.getByText("Write Tests")).toBeInTheDocument();
   });
 
-  test("toggles a todo's completed status", () => {
+  test("toggles a todo's completion status", () => {
     render(<TodoList />);
     const todoItem = screen.getByText("Learn React");
 
@@ -33,7 +33,7 @@ describe("TodoList Component", () => {
   test("deletes a todo", () => {
     render(<TodoList />);
     const todoItem = screen.getByText("Learn React");
-    const deleteButton = todoItem.nextSibling;
+    const deleteButton = screen.getAllByTestId("delete-button")[0];
 
     fireEvent.click(deleteButton);
     expect(screen.queryByText("Learn React")).not.toBeInTheDocument();

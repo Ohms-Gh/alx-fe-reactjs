@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const TodoList = () => {
-  
+  // Static demo todos
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
     { id: 2, text: "Build a Todo App", completed: false },
@@ -14,17 +14,12 @@ const TodoList = () => {
     e.preventDefault();
     if (!newTodo.trim()) return;
 
-    const newItem = {
-      id: Date.now(),
-      text: newTodo,
-      completed: false,
-    };
-
+    const newItem = { id: Date.now(), text: newTodo, completed: false };
     setTodos([...todos, newItem]);
     setNewTodo("");
   };
 
-  // Toggle todo completion
+  // Toggle completion
   const handleToggleTodo = (id) => {
     setTodos(
       todos.map((todo) =>
@@ -42,7 +37,6 @@ const TodoList = () => {
     <div>
       <h1>Todo List</h1>
 
-      {/* Add Todo Form */}
       <form onSubmit={handleAddTodo} aria-label="add-todo-form">
         <input
           type="text"
@@ -53,7 +47,6 @@ const TodoList = () => {
         <button type="submit">Add</button>
       </form>
 
-      {/* Todo Items */}
       <ul>
         {todos.map((todo) => (
           <li

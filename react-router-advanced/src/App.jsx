@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
@@ -12,13 +12,13 @@ import BlogPost from "./pages/Blog/BlogPost.jsx";
 
 export default function App() {
   return (
-    <>
+    <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
 
-        {/* ✅ Protected Nested Route */}
+        {/* Protected Nested Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />}>
             <Route path="details" element={<ProfileDetails />} />
@@ -26,13 +26,13 @@ export default function App() {
           </Route>
         </Route>
 
-        {/* ✅ Dynamic Route Example */}
+        {/* Dynamic Route */}
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:postId" element={<BlogPost />} />
 
-        {/* Fallback Route */}
+        {/* Redirect unknown routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }
